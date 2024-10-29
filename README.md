@@ -1,15 +1,15 @@
-## MAIS202_Project
+# MAIS202_Project
 
-# Overview
+## Overview
 
 This project builds a web app to classify skin diseases based on uploaded images and user-provided metadata (e.g., onset, ethnicity). The goal is to provide an accurate and accessible diagnostic tool, leveraging deep learning for reliable predictions.
 
-# Objectives
+## Objectives
 
 - Model Output: Skin disease classification.
 - Deliverable: A user-friendly web app.
 
-# Dataset
+## Dataset
 
 Source: 
 - Skin Cancer MNIST: HAM10000 dataset on Kaggle (https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000)
@@ -18,7 +18,7 @@ Download:
 - kaggle datasets download -d kmader/skin-cancer-mnist-ham10000
 Note: Do not push dataset files to the repository.
 
-# Workflow
+## Workflow
 
 Set up the development environment : TensorFlow or PyTorch for building deep learning models
 Preprocessing: Augment and encode data; split into train, validation, and test sets. (Split data into 70% training, 20% validation, and 10% testing sets.)
@@ -26,9 +26,3 @@ Model: Fine-tune pre-trained models (e.g., ResNet or VGG) with added custom laye
 Evaluation: Test on holdout data; refine with metrics and tuning if needed.
 Web App: Develop with Flask for image upload and prediction display and deploy it.
 
-# Timeline
-
-Weeks 1-2: Data setup and model selection.
-Weeks 3-5: Model training and evaluation.
-Weeks 6-7: Web app development.
-Week 8: Deploy and present.
