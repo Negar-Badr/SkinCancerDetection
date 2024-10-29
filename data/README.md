@@ -4,4 +4,7 @@ Link to our data :
 https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000
 
 To download the data :
-kaggle datasets download -d kmader/skin-cancer-mnist-ham10000
+1. pip install kaggle 
+2. kaggle datasets download -d kmader/skin-cancer-mnist-ham10000
+
+
