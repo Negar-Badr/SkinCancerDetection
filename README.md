@@ -21,9 +21,9 @@ Note: Do not push dataset files to the repository.
 
 ## Workflow
 
-Set up the development environment : TensorFlow or PyTorch for building deep learning models
-Preprocessing: Augment and encode data; split into train, validation, and test sets. (Split data into 70% training, 20% validation, and 10% testing sets.)
-Model: Fine-tune pre-trained models (e.g., ResNet or VGG) with added custom layers; train with metrics like accuracy and ROC-AUC.
-Evaluation: Test on holdout data; refine with metrics and tuning if needed.
-Web App: Develop with Flask for image upload and prediction display and deploy it.
+- Set up the development environment : TensorFlow or PyTorch for building deep learning models
+- Preprocessing: Augment and encode data; split into train, validation, and test sets. (Split data into 70% training, 20% validation, and 10% testing sets.)
+- Model: Fine-tune pre-trained models (e.g., ResNet or VGG) with added custom layers; train with metrics like accuracy and ROC-AUC.
+- Evaluation: Test on holdout data; refine with metrics and tuning if needed.
+- Web App: Develop with Flask for image upload and prediction display and deploy it.
 
