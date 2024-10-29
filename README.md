@@ -17,6 +17,7 @@ Source:
 Download:
 - pip install kaggle
 - kaggle datasets download -d kmader/skin-cancer-mnist-ham10000
+
 Note: Do not push dataset files to the repository.
 
 ## Workflow
