@@ -13,6 +13,7 @@ This project aims to develop a web application that can classify if a mole is sk
 
 Source: 
 - Skin Cancer MNIST: HAM10000 dataset on Kaggle (https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000)
+
 Download:
 - pip install kaggle
 - kaggle datasets download -d kmader/skin-cancer-mnist-ham10000
