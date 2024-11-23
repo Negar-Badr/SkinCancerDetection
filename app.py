@@ -15,7 +15,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Path to the model relative to the project directory
-MODEL_PATH = os.path.join(BASE_DIR, "model", "2024-11-21_vgg16_finetuned-2.pth")
+MODEL_PATH = os.path.join(BASE_DIR, "model", "vgg16_finetuned.pth")
 
 
 # Define and load the model
