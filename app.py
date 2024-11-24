@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import torch
 from torchvision import transforms, models
 from torch import nn
@@ -15,7 +15,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Path to the model relative to the project directory
-MODEL_PATH = os.path.join(BASE_DIR, "model", "vgg16_finetuned.pth")
+MODEL_PATH = os.path.join(BASE_DIR, "model", "2024-11-21_vgg16_finetuned-2.pth")
 
 
 # Define and load the model
@@ -45,7 +45,14 @@ transform = transforms.Compose([
     transforms.Resize((224, 224)),  # Match your model input size
     transforms.ToTensor()
 ])
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
 @app.route('/predict', methods=['POST'])
+
+
 def predict():
 
     # Check if the request contains a file
