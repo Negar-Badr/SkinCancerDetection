@@ -51,44 +51,43 @@ def home():
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
-
-
 def predict():
 
     # Check if the request contains a file
-    if 'file' not in request.files:
-        return jsonify({"error": "No file uploaded"}), 400 
-    
+    if 'image' not in request.files:
+        return jsonify({"error": "No file uploaded"}), 400
+
     # Get the file from the request
-    file = request.files['file']  
+    file = request.files['image']
 
     try:
         # Save the uploaded file to the server
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)  # Define the path to save the file
-        file.save(file_path)  # Save the file to the defined path
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename) # Define the path to save the file
+        file.save(file_path)                                                 # Save the file to the defined path
 
         # Open the saved image file and preprocess it
         # RGB is the most commonly used format
-        image = Image.open(file_path).convert('RGB')     
-        
+        image = Image.open(file_path).convert('RGB')
+
         # Apply preprocessing (resize, convert to tensor) and add batch dimension
-        image = transform(image).unsqueeze(0).to(device)  
+        image = transform(image).unsqueeze(0).to(device)
 
         # Run the image through the model to get predictions
-        with torch.no_grad(): 
-            output = model(image) 
-            _, predicted = torch.max(output, 1)  # Get the predicted class index (highest score)
-            result = predicted.item() 
+        with torch.no_grad():
+            output = model(image)
+            _, predicted = torch.max(output, 1)
+            result = predicted.item()
 
         # Clean up the uploaded file after prediction
-        os.remove(file_path) 
+        os.remove(file_path)
 
         # Return the prediction result as JSON
         return jsonify({"result": int(result)})
 
+    # Handle any exceptions 
     except Exception as e:
-        # Handle any exceptions 
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     # I put the Flask app in debug mode to test, we can change to false
