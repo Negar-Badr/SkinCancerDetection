@@ -5,37 +5,200 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skin Cancer Detection</title>
     <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css?v=4">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+            color: #333;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .hero {
+            /* height: 60vh; */
+            background: url('/static/hero-image.jpg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin: 0;
+        }
+
+        .form-container {
+            background: #fff;
+            margin: -50px auto 0 auto;
+            border-radius: 10px;
+            padding: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .form-container input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background: #e7f9e7;
+            color: #2e7d32;
+            display: none;
+        }
+
+        #preview-container {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px dashed #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+            text-align: center;
+        }
+
+        #preview-container img {
+            max-width: 100%;
+            height: auto;
+            display: none;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Skin Cancer Detection</h1>
-    <form id="upload-form" enctype="multipart/form-data">
-        <input type="file" id="image-input" accept="image/*" required>
-        <button type="button" id="submit-button">Upload and Analyze</button>
-    </form>
-    <div id="result" style="display: none;">
-        <p id="result-text"></p>
-    </div>
-    <script>
-        document.getElementById("submit-button").addEventListener("click", async () => {
-            const imageInput = document.getElementById("image-input");
-            const resultDiv = document.getElementById("result");
-            const resultText = document.getElementById("result-text");
+    <!-- <div class="hero">
+        <h1>Skin Cancer Detection</h1>
+    </div> -->
 
+    <div class="hero">
+        <video autoplay muted loop class="hero-video">
+            <source src="/static/media/virtual_body.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay">
+            <h1>Precision in Every Pixel</h1>
+        </div>
+    </div>
+    <div class="bottom-section">    
+        <!-- Left Column: Form Container -->
+        <div class="left-column">
+            <div class="form-container">
+                <form id="upload-form" enctype="multipart/form-data">
+                    <div id="preview-container">
+                        <img id="image-preview" alt="">
+                    </div>
+                    <input type="file" id="image-input" accept="image/*" required>
+                    <button type="button" id="submit-button">Upload and Analyze</button>
+                </form>
+                <div id="result">
+                    <p id="result-text"></p>
+                </div>
+            </div>
+        </div>
+        <!-- Right Column: Static Image with Text Overlay -->
+        <div class="right-column">
+            <div class="right-content">
+                <img src="/static/media/doctor_tablet.jpg" alt="Sample Image">
+                <div class="text-overlay">
+                    <h2>About Our Model...</h2>
+                    <p>
+                        Our project, created as part of the MAIS 202 course, is designed to help users find out if a skin lesion might be cancerous. 
+                        Using a fine-tuned VGG16 model, the app analyzes uploaded images and provides a simple result: 'cancerous' or 'not cancerous.'
+                    </p>
+
+                    <p>
+                        This tool raises awareness about skin health and sun exposure risks. 
+                        While our model achieved promising accuracy, it is not 100% reliable. 
+                        If you have concerns, <strong>please consult with a dermatologist for professional advice</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        const imageInput = document.getElementById("image-input");
+        const imagePreview = document.getElementById("image-preview");
+        const previewContainer = document.getElementById("preview-container");
+        const resultDiv = document.getElementById("result");
+        const resultText = document.getElementById("result-text");
+    
+        // Display uploaded image in preview
+        imageInput.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    previewContainer.classList.add("has-image"); // Add class to hide placeholder
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Reset preview if no file is uploaded
+                imagePreview.src = "";
+                previewContainer.classList.remove("has-image"); // Show placeholder
+            }
+        });
+    
+        // Handle form submission
+        document.getElementById("submit-button").addEventListener("click", async () => {
             if (!imageInput.files[0]) {
                 alert("Please upload an image!");
                 return;
             }
-
+    
             const formData = new FormData();
             formData.append("image", imageInput.files[0]);
-
+    
             try {
                 const response = await fetch("/predict", {
                     method: "POST",
                     body: formData,
                 });
+    
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+    
                 const data = await response.json();
-                resultText.innerText = `Prediction: ${data.prediction}`;
+                // resultText.innerText = `Prediction: ${data.result}`;
+                // Update the result text based on prediction
+                if (data.result === 0) {
+                    resultText.innerText = "Prediction: The uploaded skin lesion is healthy.";
+                } else if (data.result === 1) {
+                    resultText.innerText = "Prediction: The uploaded skin lesion is not healthy,\n Please consult a dermatologist.";
+                } else {
+                    resultText.innerText = "Unexpected result. Please try again.";
+                }
                 resultDiv.style.display = "block";
             } catch (error) {
                 console.error("Error:", error);
@@ -44,5 +207,6 @@
             }
         });
     </script>
+    
 </body>
 </html>
